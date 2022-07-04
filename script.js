@@ -42,7 +42,7 @@ function timerClock(minutes) {
     if (minutes.toString().length < 2 && seconds.toString().length < 2) {
       timer.innerText = `0${minutes}:0${seconds}`;
     }
-  }, 1);
+  }, 1000);
 
   runningInterval = clock;
 }
@@ -75,7 +75,7 @@ function defaultCycle() {
         promise.then(checkTimer(5));
         clearInterval(checking);
       }
-    }, 1);
+    }, 1000);
   });
 }
 

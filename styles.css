@@ -17,6 +17,7 @@ body {
   margin: auto;
   background-color: rgb(120, 159, 231);
   border-radius: 2rem;
+  box-shadow: 0.5rem 0.5rem 0.5rem rgb(90, 127, 196);
 }
 
 .buttons {
@@ -33,7 +34,7 @@ body {
   outline: none;
   background: rgb(61, 106, 189);
   border-radius: 0.5rem;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   padding: 0.5rem;
   color: rgb(33, 49, 78);
 }
@@ -58,7 +59,7 @@ body {
 .timer {
   text-align: center;
   padding: 1rem;
-  font-size: 8rem;
+  font-size: 10rem;
 }
 
 .edit-buttons {
@@ -68,14 +69,14 @@ body {
 @media (max-width: 1400px) {
   .timer {
     padding-top: 1.5rem;
-    font-size: 5rem;
+    font-size: 7rem;
   }
 }
 
 @media (max-width: 950px) {
   .timer {
     padding-top: 1.5rem;
-    font-size: 3rem;
+    font-size: 7rem;
   }
   .short,
   .long,
@@ -89,7 +90,7 @@ body {
 @media (max-width: 850px) {
   .timer {
     padding-top: 1.5rem;
-    font-size: 3rem;
+    font-size: 5rem;
   }
   .short,
   .long,
