@@ -1,0 +1,96 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  font-family: "Fira sans", sans-serif;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: rgb(56, 88, 148);
+  color: rgb(82, 132, 224);
+}
+
+.clock {
+  padding: 3rem;
+  margin: auto;
+  background-color: rgb(120, 159, 231);
+  border-radius: 2rem;
+}
+
+.buttons {
+  text-align: center;
+}
+
+.short,
+.long,
+.start,
+.finish {
+  appearance: none;
+  border: none;
+  outline: none;
+  background: rgb(61, 106, 189);
+  border-radius: 0.5rem;
+  font-size: 1.2rem;
+  padding: 0.5rem;
+  color: rgb(33, 49, 78);
+}
+
+.short:hover,
+.long:hover,
+.start:hover,
+.finish:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.short:active,
+.long:active,
+.start:active,
+.finish:active {
+  opacity: 0.6;
+}
+
+.timer {
+  text-align: center;
+  padding: 1rem;
+  font-size: 8rem;
+}
+
+.edit-buttons {
+  text-align: center;
+}
+
+@media (max-width: 1400px) {
+  .timer {
+    padding-top: 1.5rem;
+    font-size: 5rem;
+  }
+}
+
+@media (max-width: 950px) {
+  .timer {
+    padding-top: 1.5rem;
+    font-size: 3rem;
+  }
+  .short,
+  .long,
+  .start,
+  .finish {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 850px) {
+  .timer {
+    padding-top: 1.5rem;
+    font-size: 3rem;
+  }
+  .short,
+  .long,
+  .start,
+  .finish {
+    font-size: 0.5rem;
+  }
+}
