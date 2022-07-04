@@ -80,7 +80,8 @@ body {
   .short,
   .long,
   .start,
-  .finish {
+  .finish,
+  .default {
     font-size: 1rem;
   }
 }
@@ -93,7 +94,15 @@ body {
   .short,
   .long,
   .start,
-  .finish {
+  .finish,
+  .default {
     font-size: 0.5rem;
   }
+}
+
+.default {
+  padding: 1rem;
+  margin: auto;
+  margin-top: 0;
+  border-radius: 0.5rem;
 }

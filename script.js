@@ -66,11 +66,18 @@ function checkTimer(minutes) {
   }
 }
 
-/* function defaultCycle() {
+function defaultCycle() {
   checkTimer(25);
-  setInterval(checkTimer(5));
+  let promise = new Promise(function (resolve) {
+    let checking = setInterval(() => {
+      if (timer.innerText === "00:00") {
+        resolve();
+        promise.then(checkTimer(5));
+        clearInterval(checking);
+      }
+    }, 1);
+  });
 }
- */
 
 // events for buttons
 startBtn.addEventListener("click", () => checkTimer(25));
@@ -81,3 +88,5 @@ finishBtn.addEventListener("click", () => {
   clearInterval(runningInterval);
   runningInterval = null;
 });
+
+defCycleBtn.addEventListener("click", defaultCycle);
