@@ -26,7 +26,8 @@ body {
 .short,
 .long,
 .start,
-.finish {
+.finish,
+.default {
   appearance: none;
   border: none;
   outline: none;
@@ -40,7 +41,8 @@ body {
 .short:hover,
 .long:hover,
 .start:hover,
-.finish:hover {
+.finish:hover,
+.default:hover {
   cursor: pointer;
   opacity: 0.8;
 }
@@ -48,7 +50,8 @@ body {
 .short:active,
 .long:active,
 .start:active,
-.finish:active {
+.finish:active,
+.default:active {
   opacity: 0.6;
 }
 
