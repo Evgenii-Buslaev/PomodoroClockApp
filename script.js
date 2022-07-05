@@ -202,13 +202,13 @@ longBreakBtn.addEventListener("click", () => {
 
 function soundClick() {
   let audio = new Audio();
-  audio.src = "/Sounds/btn.mp3";
+  audio.src = "Sounds/btn.mp3";
   audio.autoplay = true;
 }
 
 function soundTimer() {
   let audio = new Audio();
-  audio.src = "/Sounds/time-is-up.mp3";
+  audio.src = "Sounds/time-is-up.mp3";
   audio.autoplay = true;
 }
 
