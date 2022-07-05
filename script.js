@@ -17,6 +17,7 @@ let obj = {
 
 // getting running interval function
 let runningInterval;
+let soundTimeOut;
 
 //function for timers
 function timerClock(minutes) {
@@ -48,7 +49,7 @@ function timerClock(minutes) {
     }
   }, 1000);
   setTimeout(soundTimer, minutes * 60 * 1000);
-  setTimeout(() => {
+  soundTimeOut = setTimeout(() => {
     animationColor(
       animatedBtns,
       "rgb(56, 88, 148)",
@@ -69,6 +70,7 @@ function checkTimer(minutes) {
         "Таймер все ещё запущен. Вы уверены, что хотите перейти к другому?"
       );
       if (question) {
+        clearTimeout(soundTimeOut);
         clearInterval(runningInterval);
         return timerClock(minutes);
       }
