@@ -1,7 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200;300&family=PT+Sans+Narrow&family=Titillium+Web&display=swap");
+
 * {
   box-sizing: border-box;
   margin: 0;
-  font-family: "Fira sans", sans-serif;
+  font-family: "Oswald", sans-serif;
 }
 
 body {
@@ -13,7 +15,13 @@ body {
 }
 
 .clock {
+  width: 450px;
+  height: 450px;
   padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
   margin: auto;
   background-color: rgb(120, 159, 231);
   border-radius: 2rem;
@@ -34,7 +42,7 @@ body {
   outline: none;
   background: rgb(61, 106, 189);
   border-radius: 0.5rem;
-  font-size: 1.1rem;
+  font-size: 1rem;
   padding: 0.5rem;
   color: rgb(33, 49, 78);
 }
@@ -67,15 +75,18 @@ body {
 }
 
 @media (max-width: 1400px) {
+  .clock {
+    width: 350px;
+    height: 350px;
+  }
+
   .timer {
-    padding-top: 1.5rem;
     font-size: 7rem;
   }
 }
 
 @media (max-width: 950px) {
   .timer {
-    padding-top: 1.5rem;
     font-size: 7rem;
   }
   .short,
@@ -88,8 +99,11 @@ body {
 }
 
 @media (max-width: 850px) {
+  .clock {
+    width: 270px;
+    height: 270px;
+  }
   .timer {
-    padding-top: 1.5rem;
     font-size: 5rem;
   }
   .short,
@@ -104,6 +118,17 @@ body {
 .default {
   padding: 1rem;
   margin: auto;
-  margin-top: 0;
+  margin-top: -5%;
   border-radius: 0.5rem;
+}
+
+/* Animations */
+
+.animated {
+  transition-property: background-color;
+  transition-duration: 3s;
+}
+
+.dsdsdsd {
+  color: rgba(1, 48, 17, 0.568);
 }

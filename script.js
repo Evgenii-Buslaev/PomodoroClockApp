@@ -4,6 +4,8 @@ const longBreakBtn = document.querySelector(".long");
 const startBtn = document.querySelector(".start");
 const finishBtn = document.querySelector(".finish");
 const defCycleBtn = document.querySelector(".default");
+const body = document.querySelector("body");
+const clock = document.querySelector(".clock");
 
 // catching clicks
 let obj = {
@@ -68,12 +70,35 @@ function checkTimer(minutes) {
 
 function defaultCycle() {
   checkTimer(25);
+  animationColor(
+    animatedBtns,
+    "rgba(230, 45, 106, 0.692)",
+    "rgba(173, 57, 96, 0.692)",
+    "rgba(94, 4, 34, 0.692)",
+    "rgba(70, 3, 25, 0.692)"
+  );
   let promise = new Promise(function (resolve) {
     let checking = setInterval(() => {
       if (timer.innerText === "00:00") {
         resolve();
         promise.then(checkTimer(5));
+        animationColor(
+          animatedBtns,
+          "rgba(0, 150, 50, 0.568)",
+          "rgba(7, 207, 74, 0.568)",
+          "rgba(4, 94, 34, 0.568)",
+          "rgba(1, 48, 17, 0.568)"
+        );
         clearInterval(checking);
+        setTimeout(() => {
+          animationColor(
+            animatedBtns,
+            "rgb(56, 88, 148)",
+            "rgb(61, 106, 189)",
+            "rgb(120, 159, 231)",
+            "rgb(82, 132, 224)"
+          );
+        }, 300000);
       }
     }, 1000);
   });
@@ -90,3 +115,70 @@ finishBtn.addEventListener("click", () => {
 });
 
 defCycleBtn.addEventListener("click", defaultCycle);
+
+// animations
+
+function animationColor(array, colorBg, colorBtns, colorClock, colorTimer) {
+  array.forEach((elem) => {
+    elem.classList.add("animated");
+    elem.style.backgroundColor = colorBtns;
+    elem.style.color = "black";
+  });
+  clock.classList.add("animated");
+  clock.style.backgroundColor = colorClock;
+  clock.style.boxShadow = `0.5rem 0.5rem 0.5rem ${colorBtns}`;
+
+  body.classList.add("animated");
+  body.style.backgroundColor = colorBg;
+
+  timer.classList.add("animated");
+  timer.style.color = colorTimer;
+}
+
+const animatedBtns = [
+  shortBreakBtn,
+  longBreakBtn,
+  startBtn,
+  finishBtn,
+  defCycleBtn,
+];
+
+startBtn.addEventListener("click", () => {
+  animationColor(
+    animatedBtns,
+    "rgba(230, 45, 106, 0.692)",
+    "rgba(173, 57, 96, 0.692)",
+    "rgba(94, 4, 34, 0.692)",
+    "rgba(70, 3, 25, 0.692)"
+  );
+});
+
+finishBtn.addEventListener("click", () => {
+  animationColor(
+    animatedBtns,
+    "rgb(56, 88, 148)",
+    "rgb(61, 106, 189)",
+    "rgb(120, 159, 231)",
+    "rgb(82, 132, 224)"
+  );
+});
+
+shortBreakBtn.addEventListener("click", () => {
+  animationColor(
+    animatedBtns,
+    "rgba(0, 150, 50, 0.568)",
+    "rgba(7, 207, 74, 0.568)",
+    "rgba(4, 94, 34, 0.568)",
+    "rgba(1, 48, 17, 0.568)"
+  );
+});
+
+longBreakBtn.addEventListener("click", () => {
+  animationColor(
+    animatedBtns,
+    "rgba(0, 150, 50, 0.568)",
+    "rgba(7, 207, 74, 0.568)",
+    "rgba(4, 94, 34, 0.568)",
+    "rgba(1, 48, 17, 0.568)"
+  );
+});
