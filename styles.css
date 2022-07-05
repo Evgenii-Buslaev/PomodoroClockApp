@@ -83,6 +83,9 @@ body {
   .timer {
     font-size: 7rem;
   }
+  #footer {
+    font-size: 1.5rem;
+  }
 }
 
 @media (max-width: 950px) {
@@ -95,6 +98,9 @@ body {
   .finish,
   .default {
     font-size: 1rem;
+  }
+  #footer {
+    font-size: 0.5rem;
   }
 }
 
@@ -118,7 +124,6 @@ body {
 .default {
   padding: 1rem;
   margin: auto;
-  margin-top: -5%;
   border-radius: 0.5rem;
 }
 
@@ -129,6 +134,26 @@ body {
   transition-duration: 3s;
 }
 
-.dsdsdsd {
-  color: rgba(1, 48, 17, 0.568);
+.contact-container {
+  margin: auto;
+}
+
+#footer {
+  margin: 1rem;
+  text-align: center;
+  font-size: 1rem;
+  color: rgb(33, 49, 78);
+}
+.contact-images {
+  display: flex;
+  justify-content: center;
+}
+
+.contact-images a {
+  padding: 1rem;
+  font-size: 0px;
+}
+.contact-container img {
+  width: 50px;
+  height: 50px;
 }
