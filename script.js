@@ -35,6 +35,14 @@ function timerClock(minutes) {
         timer.innerText = "00:00";
         clearInterval(clock);
         obj.start_clicks = 0;
+        animationColor(
+          animatedBtns,
+          "rgb(56, 88, 148)",
+          "rgb(61, 106, 189)",
+          "rgb(120, 159, 231)",
+          "rgb(82, 132, 224)"
+        );
+        soundTimer();
       }
     }
     timer.innerText = `${minutes}:${seconds}`;
@@ -48,17 +56,6 @@ function timerClock(minutes) {
       timer.innerText = `0${minutes}:0${seconds}`;
     }
   }, 1000);
-  setTimeout(soundTimer, minutes * 60 * 1000);
-  soundTimeOut = setTimeout(() => {
-    animationColor(
-      animatedBtns,
-      "rgb(56, 88, 148)",
-      "rgb(61, 106, 189)",
-      "rgb(120, 159, 231)",
-      "rgb(82, 132, 224)"
-    );
-  }, minutes * 60 * 1000);
-
   runningInterval = clock;
 }
 
