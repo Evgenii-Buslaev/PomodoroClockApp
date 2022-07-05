@@ -6,6 +6,8 @@ const finishBtn = document.querySelector(".finish");
 const defCycleBtn = document.querySelector(".default");
 const body = document.querySelector("body");
 const clock = document.querySelector(".clock");
+const editBtns = document.querySelector(".edit-buttons");
+const breakBtns = document.querySelector(".buttons");
 
 // catching clicks
 let obj = {
@@ -45,6 +47,16 @@ function timerClock(minutes) {
       timer.innerText = `0${minutes}:0${seconds}`;
     }
   }, 1000);
+  setTimeout(soundTimer, minutes * 60 * 1000);
+  setTimeout(() => {
+    animationColor(
+      animatedBtns,
+      "rgb(56, 88, 148)",
+      "rgb(61, 106, 189)",
+      "rgb(120, 159, 231)",
+      "rgb(82, 132, 224)"
+    );
+  }, minutes * 60 * 1000);
 
   runningInterval = clock;
 }
@@ -100,7 +112,10 @@ function defaultCycle() {
           );
         }, 300000);
       }
-    }, 1000);
+      if (timer.innerText === "00:03") {
+        soundTimer();
+      }
+    }, 100);
   });
 }
 
@@ -182,3 +197,21 @@ longBreakBtn.addEventListener("click", () => {
     "rgba(1, 48, 17, 0.568)"
   );
 });
+
+// sounds
+
+function soundClick() {
+  let audio = new Audio();
+  audio.src = "/Sounds/btn.mp3";
+  audio.autoplay = true;
+}
+
+function soundTimer() {
+  let audio = new Audio();
+  audio.src = "/Sounds/time-is-up.mp3";
+  audio.autoplay = true;
+}
+
+editBtns.addEventListener("click", soundClick);
+breakBtns.addEventListener("click", soundClick);
+defCycleBtn.addEventListener("click", soundClick);
