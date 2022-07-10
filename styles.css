@@ -14,6 +14,9 @@ body {
   color: rgb(82, 132, 224);
 }
 
+h2 {
+  margin: 1rem auto;
+}
 .clock {
   width: 450px;
   height: 450px;
@@ -28,10 +31,19 @@ body {
   box-shadow: 0.5rem 0.5rem 0.5rem rgb(90, 127, 196);
 }
 
+.choose-buttons,
 .buttons {
   text-align: center;
 }
 
+.short-choose,
+.long-choose {
+  margin: 1rem auto;
+  width: 225px;
+}
+
+.short-choose,
+.long-choose,
 .short,
 .long,
 .start,
@@ -47,6 +59,8 @@ body {
   color: rgb(33, 49, 78);
 }
 
+.short-choose:hover,
+.long-choose:hover,
 .short:hover,
 .long:hover,
 .start:hover,
@@ -56,6 +70,8 @@ body {
   opacity: 0.8;
 }
 
+.short-choose:active,
+.long-choose:active,
 .short:active,
 .long:active,
 .start:active,
@@ -75,6 +91,11 @@ body {
 }
 
 @media (max-width: 1400px) {
+  .short-choose,
+  .long-choose {
+    width: 175px;
+  }
+
   .clock {
     width: 350px;
     height: 350px;
@@ -92,6 +113,9 @@ body {
   .timer {
     font-size: 7rem;
   }
+
+  .short-choose,
+  .long-choose,
   .short,
   .long,
   .start,
@@ -105,6 +129,14 @@ body {
 }
 
 @media (max-width: 850px) {
+  h2 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  .short-choose,
+  .long-choose {
+    width: 135px;
+  }
   .clock {
     width: 270px;
     height: 270px;
@@ -112,6 +144,8 @@ body {
   .timer {
     font-size: 5rem;
   }
+  .short-choose,
+  .long-choose,
   .short,
   .long,
   .start,

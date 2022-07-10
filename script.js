@@ -1,3 +1,6 @@
+const chooseBtns = document.querySelector(".choose-buttons");
+const chooseShortBtn = document.querySelector(".short-choose");
+const chooseLongBtn = document.querySelector(".long-choose");
 const timer = document.querySelector(".timer");
 const shortBreakBtn = document.querySelector(".short");
 const longBreakBtn = document.querySelector(".long");
@@ -118,8 +121,20 @@ function defaultCycle() {
   });
 }
 
+// variables for duration
+let sessionDuration = 25;
+
+chooseShortBtn.addEventListener("click", () => {
+  sessionDuration = 25;
+  timer.innerText = "25:00";
+});
+chooseLongBtn.addEventListener("click", () => {
+  sessionDuration = 50;
+  timer.innerText = "50:00";
+});
+
 // events for buttons
-startBtn.addEventListener("click", () => checkTimer(25));
+startBtn.addEventListener("click", () => checkTimer(sessionDuration));
 shortBreakBtn.addEventListener("click", () => checkTimer(5));
 longBreakBtn.addEventListener("click", () => checkTimer(10));
 
@@ -138,6 +153,10 @@ function animationColor(array, colorBg, colorBtns, colorClock, colorTimer) {
     elem.style.backgroundColor = colorBtns;
     elem.style.color = "black";
   });
+
+  document.querySelector("h2").classList.add = "animated";
+  document.querySelector("h2").style.color = colorBg;
+
   clock.classList.add("animated");
   clock.style.backgroundColor = colorClock;
   clock.style.boxShadow = `0.5rem 0.5rem 0.5rem ${colorBtns}`;
@@ -150,6 +169,8 @@ function animationColor(array, colorBg, colorBtns, colorClock, colorTimer) {
 }
 
 const animatedBtns = [
+  chooseShortBtn,
+  chooseLongBtn,
   shortBreakBtn,
   longBreakBtn,
   startBtn,
@@ -210,6 +231,12 @@ function soundTimer() {
   audio.src = "Sounds/time-is-up.mp3";
   audio.autoplay = true;
 }
+
+chooseBtns.addEventListener("click", (event) => {
+  if (event.target.tagName === "BUTTON") {
+    soundClick();
+  }
+});
 
 editBtns.addEventListener("click", soundClick);
 breakBtns.addEventListener("click", soundClick);
