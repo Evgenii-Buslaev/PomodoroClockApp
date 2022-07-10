@@ -83,7 +83,7 @@ function checkTimer(minutes) {
 }
 
 function defaultCycle() {
-  checkTimer(25);
+  checkTimer(sessionDuration);
   animationColor(
     animatedBtns,
     "rgba(230, 45, 106, 0.692)",
@@ -114,23 +114,29 @@ function defaultCycle() {
           );
         }, 300000);
       }
-      if (timer.innerText === "00:03") {
-        soundTimer();
-      }
     }, 100);
   });
 }
 
 // variables for duration
-let sessionDuration = 25;
+let sessionDuration = 1;
 
 chooseShortBtn.addEventListener("click", () => {
   sessionDuration = 25;
-  timer.innerText = "25:00";
+  timer.style.opacity = "0";
+  setTimeout(() => {
+    timer.style.opacity = "1";
+    timer.innerText = "25:00";
+  }, 500);
 });
 chooseLongBtn.addEventListener("click", () => {
   sessionDuration = 50;
-  timer.innerText = "50:00";
+  timer.style.opacity = "0";
+
+  setTimeout(() => {
+    timer.style.opacity = "1";
+    timer.innerText = "50:00";
+  }, 500);
 });
 
 // events for buttons
