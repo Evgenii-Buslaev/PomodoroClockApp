@@ -155,7 +155,7 @@ function animationColor(array, colorBg, colorBtns, colorClock, colorTimer) {
   });
 
   document.querySelector("h2").classList.add = "animated";
-  document.querySelector("h2").style.color = colorBg;
+  document.querySelector("h2").style.color = colorClock;
 
   clock.classList.add("animated");
   clock.style.backgroundColor = colorClock;
