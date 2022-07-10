@@ -119,7 +119,7 @@ function defaultCycle() {
 }
 
 // variables for duration
-let sessionDuration = 1;
+let sessionDuration;
 
 chooseShortBtn.addEventListener("click", () => {
   sessionDuration = 25;
