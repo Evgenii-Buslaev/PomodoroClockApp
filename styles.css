@@ -14,9 +14,14 @@ body {
   color: rgb(82, 132, 224);
 }
 
-h3 {
+h3:first-child {
   margin: 1rem auto 0;
 }
+
+h3 {
+  margin: 0 auto;
+}
+
 .clock {
   width: 450px;
   height: 450px;

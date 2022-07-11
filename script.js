@@ -29,11 +29,10 @@ let runningInterval;
 let soundTimeOut;
 
 //function for timers
-function timerClock(minutes) {
+function timerClock(minutes, seconds = 1) {
   if (!obj.start_clicks) {
     obj.start_clicks = 1;
   }
-  let seconds = 1;
   let clock = setInterval(() => {
     seconds--;
     if (seconds === 0) {
@@ -43,6 +42,7 @@ function timerClock(minutes) {
       } else {
         timer.innerText = "00:00";
         clearInterval(clock);
+        localStorage.clear();
         obj.start_clicks = 0;
         animationColor(
           animatedBtns,
@@ -64,12 +64,30 @@ function timerClock(minutes) {
     if (minutes.toString().length < 2 && seconds.toString().length < 2) {
       timer.innerText = `0${minutes}:0${seconds}`;
     }
+
+    if (!localStorage.getItem("time")) {
+      localStorage.setItem("time", timer.innerText);
+    } else {
+      localStorage.removeItem("time");
+      localStorage.setItem("time", timer.innerText);
+    }
   }, 1000);
+
   runningInterval = clock;
 }
 
+// adding state of counting to local storage
+if (localStorage.getItem("time")) {
+  window.addEventListener("load", () => {
+    checkTimer(
+      JSON.parse(localStorage.getItem("time").split(":")[0]),
+      JSON.parse(localStorage.getItem("time").split(":")[1])
+    );
+  });
+}
+
 // checking whether any timer is running already
-function checkTimer(minutes) {
+function checkTimer(minutes, seconds = 1) {
   if (runningInterval) {
     if (obj.start_clicks) {
       let question = confirm(
@@ -78,13 +96,13 @@ function checkTimer(minutes) {
       if (question) {
         clearTimeout(soundTimeOut);
         clearInterval(runningInterval);
-        return timerClock(minutes);
+        return timerClock(minutes, seconds);
       }
     } else {
-      return timerClock(minutes);
+      return timerClock(minutes, seconds);
     }
   } else {
-    timerClock(minutes);
+    timerClock(minutes, seconds);
   }
 }
 
@@ -161,6 +179,7 @@ longBreakBtn.addEventListener("click", () => checkTimer(breakDuration));
 finishBtn.addEventListener("click", () => {
   clearInterval(runningInterval);
   runningInterval = null;
+  localStorage.clear();
 });
 
 defCycleBtn.addEventListener("click", defaultCycle);
