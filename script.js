@@ -78,12 +78,23 @@ function timerClock(minutes, seconds = 1) {
 
 // adding state of counting to local storage
 if (localStorage.getItem("time")) {
-  window.addEventListener("load", () => {
-    checkTimer(
-      JSON.parse(localStorage.getItem("time").split(":")[0]),
-      JSON.parse(localStorage.getItem("time").split(":")[1])
-    );
-  });
+  setTimeout(() => {
+    timer.style.opacity = "1";
+  }, 1300);
+  if (timer.innerText !== "00:00") {
+    window.addEventListener("load", () => {
+      checkTimer(
+        JSON.parse(+localStorage.getItem("time").split(":")[0]),
+        JSON.parse(+localStorage.getItem("time").split(":")[1])
+      );
+    });
+  } else {
+    localStorage.clear();
+  }
+} else {
+  setTimeout(() => {
+    timer.style.opacity = "1";
+  }, 0);
 }
 
 // checking whether any timer is running already
@@ -102,7 +113,7 @@ function checkTimer(minutes, seconds = 1) {
       return timerClock(minutes, seconds);
     }
   } else {
-    timerClock(minutes, seconds);
+    return timerClock(minutes, seconds);
   }
 }
 
