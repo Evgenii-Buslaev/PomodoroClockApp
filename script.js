@@ -1,6 +1,8 @@
 const chooseBtns = document.querySelector(".choose-buttons");
 const chooseShortBtn = document.querySelector(".short-choose");
 const chooseLongBtn = document.querySelector(".long-choose");
+const chooseBreakShortBtn = document.querySelector(".short-break-choose");
+const chooseBreakLongBtn = document.querySelector(".long-break-choose");
 const timer = document.querySelector(".timer");
 const shortBreakBtn = document.querySelector(".short");
 const longBreakBtn = document.querySelector(".long");
@@ -17,6 +19,10 @@ let obj = {
   start_clicks: 0,
   long_clicks: 0,
 };
+
+// variables for duration
+let sessionDuration = 25;
+let breakDuration = 5;
 
 // getting running interval function
 let runningInterval;
@@ -118,31 +124,39 @@ function defaultCycle() {
   });
 }
 
-// variables for duration
-let sessionDuration = 25;
+chooseBreakShortBtn.addEventListener("click", () => {
+  breakDuration = 5;
+});
+
+chooseBreakShortBtn.addEventListener("click", () => {
+  breakDuration = 10;
+});
 
 chooseShortBtn.addEventListener("click", () => {
   sessionDuration = 25;
-  timer.style.opacity = "0";
-  setTimeout(() => {
-    timer.style.opacity = "1";
-    timer.innerText = "25:00";
-  }, 500);
+  if (!runningInterval) {
+    timer.style.opacity = "0";
+    setTimeout(() => {
+      timer.style.opacity = "1";
+      timer.innerText = "25:00";
+    }, 500);
+  }
 });
 chooseLongBtn.addEventListener("click", () => {
   sessionDuration = 50;
-  timer.style.opacity = "0";
-
-  setTimeout(() => {
-    timer.style.opacity = "1";
-    timer.innerText = "50:00";
-  }, 500);
+  if (!runningInterval) {
+    timer.style.opacity = "0";
+    setTimeout(() => {
+      timer.style.opacity = "1";
+      timer.innerText = "50:00";
+    }, 500);
+  }
 });
 
 // events for buttons
 startBtn.addEventListener("click", () => checkTimer(sessionDuration));
-shortBreakBtn.addEventListener("click", () => checkTimer(5));
-longBreakBtn.addEventListener("click", () => checkTimer(10));
+shortBreakBtn.addEventListener("click", () => checkTimer(breakDuration));
+longBreakBtn.addEventListener("click", () => checkTimer(breakDuration));
 
 finishBtn.addEventListener("click", () => {
   clearInterval(runningInterval);
@@ -160,8 +174,11 @@ function animationColor(array, colorBg, colorBtns, colorClock, colorTimer) {
     elem.style.color = "black";
   });
 
-  document.querySelector("h2").classList.add = "animated";
-  document.querySelector("h2").style.color = colorClock;
+  let headings = document.querySelectorAll("h3");
+  for (let i = 0; i < headings.length; i++) {
+    headings[i].classList.add = "animated";
+    headings[i].style.color = colorClock;
+  }
 
   clock.classList.add("animated");
   clock.style.backgroundColor = colorClock;
@@ -175,6 +192,8 @@ function animationColor(array, colorBg, colorBtns, colorClock, colorTimer) {
 }
 
 const animatedBtns = [
+  chooseBreakShortBtn,
+  chooseBreakLongBtn,
   chooseShortBtn,
   chooseLongBtn,
   shortBreakBtn,

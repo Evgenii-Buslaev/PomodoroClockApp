@@ -14,8 +14,8 @@ body {
   color: rgb(82, 132, 224);
 }
 
-h2 {
-  margin: 1rem auto;
+h3 {
+  margin: 1rem auto 0;
 }
 .clock {
   width: 450px;
@@ -37,13 +37,17 @@ h2 {
 }
 
 .short-choose,
-.long-choose {
+.long-choose,
+.short-break-choose,
+.long-break-choose {
   margin: 1rem auto;
   width: 225px;
 }
 
 .short-choose,
 .long-choose,
+.short-break-choose,
+.long-break-choose,
 .short,
 .long,
 .start,
@@ -59,6 +63,8 @@ h2 {
   color: rgb(33, 49, 78);
 }
 
+.short-break-choose:hover,
+.long-break-choose:hover,
 .short-choose:hover,
 .long-choose:hover,
 .short:hover,
@@ -70,6 +76,8 @@ h2 {
   opacity: 0.8;
 }
 
+.short-break-choose:active,
+.long-break-choose:active,
 .short-choose:active,
 .long-choose:active,
 .short:active,
@@ -93,6 +101,8 @@ h2 {
 }
 
 @media (max-width: 1400px) {
+  .short-break-choose,
+  .long-break-choose,
   .short-choose,
   .long-choose {
     width: 175px;
@@ -116,6 +126,8 @@ h2 {
     font-size: 7rem;
   }
 
+  .short-break-choose,
+  .long-break-choose,
   .short-choose,
   .long-choose,
   .short,
@@ -131,10 +143,12 @@ h2 {
 }
 
 @media (max-width: 850px) {
-  h2 {
+  h3 {
     font-size: 1rem;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0;
   }
+  .short-break-choose,
+  .long-break-choose,
   .short-choose,
   .long-choose {
     width: 135px;
@@ -146,6 +160,8 @@ h2 {
   .timer {
     font-size: 5rem;
   }
+  .short-break-choose,
+  .long-break-choose,
   .short-choose,
   .long-choose,
   .short,
