@@ -27,39 +27,50 @@
     <title>PomodoroClock</title>
   </head>
   <body>
-    <div class="choose-buttons">
-      <h3>Выберите продолжительность рабочей сессии:</h3>
-      <button class="short-choose">25 минут</button>
-      <button class="long-choose">50 минут</button>
-      <h3>Выберите продолжительность перерыва:</h3>
-      <button class="short-break-choose">5 минут</button>
-      <button class="long-break-choose">10 минут</button>
-    </div>
-    <div class="clock">
-      <div class="buttons">
-        <button class="short">Короткий перерыв</button>
-        <button class="long">Длинный перерыв</button>
-      </div>
-      <div class="timer">25:00</div>
-      <div class="edit-buttons">
-        <button class="start">Рабочая сессия</button>
-        <button class="finish">Остановить таймер</button>
+    <div class="settings-container">
+      <div class="choose-buttons">
+        <h3>Выберите продолжительность рабочей сессии:</h3>
+        <button class="short-choose">25 минут</button>
+        <button class="long-choose">50 минут</button>
+        <h3>Выберите продолжительность перерыва:</h3>
+        <button class="short-break-choose">5 минут</button>
+        <button class="long-break-choose">10 минут</button>
       </div>
     </div>
-    <button class="default">Обычный цикл</button>
-
-    <div class="contact-container">
-      <p id="footer">Связаться с разработчиком:</p>
-      <div class="contact-images">
-        <a href="https://vk.com/eugenebus" target="_blank">
-          <img src="Images/VK.png" alt="VKicon" />
-        </a>
-        <a href="https://t.me/eugenebus" target="_blank">
-          <img src="Images/TG.png" alt="TGicon" />
-        </a>
-        <a href="https://github.com/Evgenii-Buslaev" target="_blank">
-          <img src="Images/GH.png" alt="GHicon" />
-        </a>
+    <div class="center-panel">
+      <div class="clock">
+        <div class="buttons">
+          <button class="short">Короткий перерыв</button>
+          <button class="long">Длинный перерыв</button>
+        </div>
+        <div class="timer">25:00</div>
+        <div class="edit-buttons">
+          <button class="start">Рабочая сессия</button>
+          <button class="finish">Остановить таймер</button>
+        </div>
+      </div>
+      <button class="default">Обычный цикл</button>
+      <div class="contact-container">
+        <p id="footer">Связаться с разработчиком:</p>
+        <div class="contact-images">
+          <a href="https://vk.com/eugenebus" target="_blank">
+            <img src="Images/VK.png" alt="VKicon" />
+          </a>
+          <a href="https://t.me/eugenebus" target="_blank">
+            <img src="Images/TG.png" alt="TGicon" />
+          </a>
+          <a href="https://github.com/Evgenii-Buslaev" target="_blank">
+            <img src="Images/GH.png" alt="GHicon" />
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="pomodoro-list">
+      <div class="pomodoro-element">Цикл 1 (Окончание 00:00:00)</div>
+      <div class="pomodoro-element">Цикл 2 (Окончание 00:00:00)</div>
+      <div class="pomodoro-element">Цикл 3 (Окончание 00:00:00)</div>
+      <div class="pomodoro-element cycle-amount">
+        Общее количество прошедших циклов: 3
       </div>
     </div>
   </body>

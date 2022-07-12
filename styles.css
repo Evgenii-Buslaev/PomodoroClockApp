@@ -8,7 +8,8 @@
 
 body {
   display: flex;
-  flex-direction: column;
+  justify-content: space-evenly;
+  margin: 2rem auto 0;
   min-height: 100vh;
   background: rgb(56, 88, 148);
   color: rgb(82, 132, 224);
@@ -20,6 +21,11 @@ h3:first-child {
 
 h3 {
   margin: 0 auto;
+}
+
+.center-panel {
+  display: flex;
+  flex-direction: column;
 }
 
 .clock {
@@ -36,6 +42,11 @@ h3 {
   box-shadow: 0.5rem 0.5rem 0.5rem rgb(90, 127, 196);
 }
 
+.choose-buttons {
+  width: 350px;
+  height: auto;
+  border: solid black;
+}
 .choose-buttons,
 .buttons {
   text-align: center;
@@ -211,7 +222,20 @@ h3 {
   padding: 1rem;
   font-size: 0px;
 }
+
 .contact-container img {
   width: 50px;
   height: 50px;
+}
+
+.pomodoro-list {
+  /* width: 30%; */
+  height: auto;
+  border: solid black;
+}
+
+.pomodoro-element {
+  margin: 1rem auto;
+  position: relative;
+  left: 1rem;
 }
