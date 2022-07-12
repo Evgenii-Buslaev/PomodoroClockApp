@@ -16,6 +16,10 @@ const clock = document.querySelector(".clock");
 const editBtns = document.querySelector(".edit-buttons");
 const breakBtns = document.querySelector(".buttons");
 
+// variables for duration
+let sessionDuration = 25;
+let breakDuration = 5;
+
 // object for catching changes of clock's state
 let change = {
   start_clicks: 0,
@@ -23,11 +27,9 @@ let change = {
   running_interval: null,
   colors: null,
   rejected_timer: false,
+  running_cycle: sessionDuration,
+  cycles_amount: 0,
 };
-
-// variables for duration
-let sessionDuration = 25;
-let breakDuration = 5;
 
 // adding state of counting to local storage
 if (localStorage.getItem("time")) {
@@ -73,6 +75,7 @@ function timerClock(minutes, seconds = 1) {
           "rgb(82, 132, 224)"
         );
         soundTimer();
+        localStorage.clear();
       }
     }
     timer.innerText = `${minutes}:${seconds}`;
@@ -86,13 +89,11 @@ function timerClock(minutes, seconds = 1) {
       timer.innerText = `0${minutes}:0${seconds}`;
     }
 
-    if (!localStorage.getItem("time")) {
-      localStorage.setItem("time", timer.innerText);
-    } else {
+    if (localStorage.getItem("time") && timer.innerText !== "00:00") {
       localStorage.removeItem("time");
       localStorage.setItem("time", timer.innerText);
     }
-  }, 1000);
+  }, 1);
 
   change.running_interval = clock;
 }
@@ -121,36 +122,34 @@ function checkTimer(minutes, seconds = 1) {
 }
 
 function defaultCycle() {
-  checkTimer(sessionDuration);
-  animationColor(
-    "rgba(230, 45, 106, 0.692)",
-    "rgba(173, 57, 96, 0.692)",
-    "rgba(94, 4, 34, 0.692)",
-    "rgba(70, 3, 25, 0.692)"
-  );
-  let promise = new Promise(function (resolve) {
-    let checking = setInterval(() => {
-      if (timer.innerText === "00:00") {
-        resolve();
-        promise.then(checkTimer(5));
-        animationColor(
-          "rgba(0, 150, 50, 0.568)",
-          "rgba(7, 207, 74, 0.568)",
-          "rgba(4, 94, 34, 0.568)",
-          "rgba(1, 48, 17, 0.568)"
-        );
-        clearInterval(checking);
-        setTimeout(() => {
-          animationColor(
-            "rgb(56, 88, 148)",
-            "rgb(61, 106, 189)",
-            "rgb(120, 159, 231)",
-            "rgb(82, 132, 224)"
-          );
-        }, 300000);
+  checkTimer(change.running_cycle);
+  if (change.running_cycle === sessionDuration) {
+    animationColor(
+      "rgba(230, 45, 106, 0.692)",
+      "rgba(173, 57, 96, 0.692)",
+      "rgba(94, 4, 34, 0.692)",
+      "rgba(70, 3, 25, 0.692)"
+    );
+  } else {
+    animationColor(
+      "rgba(0, 150, 50, 0.568)",
+      "rgba(7, 207, 74, 0.568)",
+      "rgba(4, 94, 34, 0.568)",
+      "rgba(1, 48, 17, 0.568)"
+    );
+  }
+  let checking = setInterval(() => {
+    if (timer.innerText == "00:00") {
+      if (change.running_cycle === sessionDuration) {
+        change.running_cycle = breakDuration;
+      } else {
+        change.running_cycle = sessionDuration;
+        change.cycles_amount++;
       }
-    }, 100);
-  });
+      clearInterval(checking);
+      return defaultCycle();
+    }
+  }, 100);
 }
 
 // events for settings buttons
@@ -186,8 +185,8 @@ chooseLongBtn.addEventListener("click", () => {
 
 // events for clock buttons
 startBtn.addEventListener("click", () => checkTimer(sessionDuration));
-shortBreakBtn.addEventListener("click", () => checkTimer(breakDuration));
-longBreakBtn.addEventListener("click", () => checkTimer(breakDuration));
+shortBreakBtn.addEventListener("click", () => checkTimer(5));
+longBreakBtn.addEventListener("click", () => checkTimer(10));
 
 finishBtn.addEventListener("click", () => {
   clearInterval(change.running_interval);
