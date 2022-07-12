@@ -16,25 +16,18 @@ const clock = document.querySelector(".clock");
 const editBtns = document.querySelector(".edit-buttons");
 const breakBtns = document.querySelector(".buttons");
 
-// catching clicks
-let obj = {
+// object for catching changes of clock's state
+let change = {
   start_clicks: 0,
   long_clicks: 0,
+  running_interval: null,
+  colors: null,
+  rejected_timer: false,
 };
 
 // variables for duration
 let sessionDuration = 25;
 let breakDuration = 5;
-
-// catching running interval function
-let runningInterval;
-let soundTimeOut;
-
-// catching colors
-let colors;
-
-// catching rejected change of timer
-let rejectedTimer = false;
 
 // adding state of counting to local storage
 if (localStorage.getItem("time")) {
@@ -59,8 +52,8 @@ if (localStorage.getItem("time")) {
 
 //function for timers
 function timerClock(minutes, seconds = 1) {
-  if (!obj.start_clicks) {
-    obj.start_clicks = 1;
+  if (!change.start_clicks) {
+    change.start_clicks = 1;
   }
   let clock = setInterval(() => {
     seconds--;
@@ -72,9 +65,8 @@ function timerClock(minutes, seconds = 1) {
         timer.innerText = "00:00";
         clearInterval(clock);
         localStorage.clear();
-        obj.start_clicks = 0;
+        change.start_clicks = 0;
         animationColor(
-          animatedBtns,
           "rgb(56, 88, 148)",
           "rgb(61, 106, 189)",
           "rgb(120, 159, 231)",
@@ -102,23 +94,23 @@ function timerClock(minutes, seconds = 1) {
     }
   }, 1000);
 
-  runningInterval = clock;
+  change.running_interval = clock;
 }
 
 // checking whether any timer is running already
 function checkTimer(minutes, seconds = 1) {
-  if (runningInterval) {
-    if (obj.start_clicks) {
+  if (change.running_interval) {
+    if (change.start_clicks) {
       let question = confirm(
         "Таймер все ещё запущен. Вы уверены, что хотите перейти к другому?"
       );
       if (question) {
-        clearTimeout(soundTimeOut);
-        clearInterval(runningInterval);
-        rejectedTimer = false;
+        /*     clearTimeout(soundTimeOut); */
+        clearInterval(change.running_interval);
+        change.rejected_timer = false;
         return timerClock(minutes, seconds);
       } else {
-        rejectedTimer = true;
+        change.rejected_timer = true;
       }
     } else {
       return timerClock(minutes, seconds);
@@ -131,7 +123,6 @@ function checkTimer(minutes, seconds = 1) {
 function defaultCycle() {
   checkTimer(sessionDuration);
   animationColor(
-    animatedBtns,
     "rgba(230, 45, 106, 0.692)",
     "rgba(173, 57, 96, 0.692)",
     "rgba(94, 4, 34, 0.692)",
@@ -143,7 +134,6 @@ function defaultCycle() {
         resolve();
         promise.then(checkTimer(5));
         animationColor(
-          animatedBtns,
           "rgba(0, 150, 50, 0.568)",
           "rgba(7, 207, 74, 0.568)",
           "rgba(4, 94, 34, 0.568)",
@@ -152,7 +142,6 @@ function defaultCycle() {
         clearInterval(checking);
         setTimeout(() => {
           animationColor(
-            animatedBtns,
             "rgb(56, 88, 148)",
             "rgb(61, 106, 189)",
             "rgb(120, 159, 231)",
@@ -175,7 +164,7 @@ chooseBreakShortBtn.addEventListener("click", () => {
 
 chooseShortBtn.addEventListener("click", () => {
   sessionDuration = 25;
-  if (!runningInterval) {
+  if (!change.running_interval) {
     timer.style.opacity = "0";
     setTimeout(() => {
       timer.style.opacity = "1";
@@ -186,7 +175,7 @@ chooseShortBtn.addEventListener("click", () => {
 
 chooseLongBtn.addEventListener("click", () => {
   sessionDuration = 50;
-  if (!runningInterval) {
+  if (!change.running_interval) {
     timer.style.opacity = "0";
     setTimeout(() => {
       timer.style.opacity = "1";
@@ -201,8 +190,8 @@ shortBreakBtn.addEventListener("click", () => checkTimer(breakDuration));
 longBreakBtn.addEventListener("click", () => checkTimer(breakDuration));
 
 finishBtn.addEventListener("click", () => {
-  clearInterval(runningInterval);
-  runningInterval = null;
+  clearInterval(change.running_interval);
+  change.running_interval = null;
   localStorage.clear();
 });
 
@@ -260,7 +249,7 @@ if (localStorage.getItem("colors")) {
 }
 
 startBtn.addEventListener("click", () => {
-  if (rejectedTimer === false)
+  if (change.rejected_timer === false)
     animationColor(
       "rgba(230, 45, 106, 0.692)",
       "rgba(173, 57, 96, 0.692)",
@@ -270,7 +259,7 @@ startBtn.addEventListener("click", () => {
 });
 
 finishBtn.addEventListener("click", () => {
-  if (rejectedTimer === false) {
+  if (change.rejected_timer === false) {
     animationColor(
       "rgb(56, 88, 148)",
       "rgb(61, 106, 189)",
@@ -281,7 +270,7 @@ finishBtn.addEventListener("click", () => {
 });
 
 shortBreakBtn.addEventListener("click", () => {
-  if (rejectedTimer === false) {
+  if (change.rejected_timer === false) {
     animationColor(
       "rgba(0, 150, 50, 0.568)",
       "rgba(7, 207, 74, 0.568)",
@@ -292,7 +281,7 @@ shortBreakBtn.addEventListener("click", () => {
 });
 
 longBreakBtn.addEventListener("click", () => {
-  if (rejectedTimer === false) {
+  if (change.rejected_timer === false) {
     animationColor(
       "rgba(0, 150, 50, 0.568)",
       "rgba(7, 207, 74, 0.568)",
