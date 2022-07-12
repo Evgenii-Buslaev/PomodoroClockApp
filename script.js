@@ -37,6 +37,7 @@ if (localStorage.getItem("time")) {
     timer.style.opacity = "1";
   }, 1300);
   if (timer.innerText !== "00:00") {
+    console.log(1);
     window.addEventListener("load", () => {
       checkTimer(
         JSON.parse(+localStorage.getItem("time").split(":")[0]),
@@ -66,7 +67,6 @@ function timerClock(minutes, seconds = 1) {
       } else {
         timer.innerText = "00:00";
         clearInterval(clock);
-        localStorage.clear();
         change.start_clicks = 0;
         animationColor(
           "rgb(56, 88, 148)",
@@ -76,6 +76,7 @@ function timerClock(minutes, seconds = 1) {
         );
         soundTimer();
         localStorage.clear();
+        return;
       }
     }
     timer.innerText = `${minutes}:${seconds}`;
@@ -89,11 +90,13 @@ function timerClock(minutes, seconds = 1) {
       timer.innerText = `0${minutes}:0${seconds}`;
     }
 
-    if (localStorage.getItem("time") && timer.innerText !== "00:00") {
+    if (localStorage.getItem("time")) {
       localStorage.removeItem("time");
       localStorage.setItem("time", timer.innerText);
+    } else {
+      localStorage.setItem("time", timer.innerText);
     }
-  }, 1);
+  }, 1000);
 
   change.running_interval = clock;
 }
