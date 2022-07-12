@@ -33,6 +33,9 @@ let soundTimeOut;
 // catching colors
 let colors;
 
+// catching rejected change of timer
+let rejectedTimer = false;
+
 // adding state of counting to local storage
 if (localStorage.getItem("time")) {
   setTimeout(() => {
@@ -112,7 +115,10 @@ function checkTimer(minutes, seconds = 1) {
       if (question) {
         clearTimeout(soundTimeOut);
         clearInterval(runningInterval);
+        rejectedTimer = false;
         return timerClock(minutes, seconds);
+      } else {
+        rejectedTimer = true;
       }
     } else {
       return timerClock(minutes, seconds);
@@ -254,39 +260,46 @@ if (localStorage.getItem("colors")) {
 }
 
 startBtn.addEventListener("click", () => {
-  animationColor(
-    "rgba(230, 45, 106, 0.692)",
-    "rgba(173, 57, 96, 0.692)",
-    "rgba(94, 4, 34, 0.692)",
-    "rgba(70, 3, 25, 0.692)"
-  );
+  if (rejectedTimer === false)
+    animationColor(
+      "rgba(230, 45, 106, 0.692)",
+      "rgba(173, 57, 96, 0.692)",
+      "rgba(94, 4, 34, 0.692)",
+      "rgba(70, 3, 25, 0.692)"
+    );
 });
 
 finishBtn.addEventListener("click", () => {
-  animationColor(
-    "rgb(56, 88, 148)",
-    "rgb(61, 106, 189)",
-    "rgb(120, 159, 231)",
-    "rgb(82, 132, 224)"
-  );
+  if (rejectedTimer === false) {
+    animationColor(
+      "rgb(56, 88, 148)",
+      "rgb(61, 106, 189)",
+      "rgb(120, 159, 231)",
+      "rgb(82, 132, 224)"
+    );
+  }
 });
 
 shortBreakBtn.addEventListener("click", () => {
-  animationColor(
-    "rgba(0, 150, 50, 0.568)",
-    "rgba(7, 207, 74, 0.568)",
-    "rgba(4, 94, 34, 0.568)",
-    "rgba(1, 48, 17, 0.568)"
-  );
+  if (rejectedTimer === false) {
+    animationColor(
+      "rgba(0, 150, 50, 0.568)",
+      "rgba(7, 207, 74, 0.568)",
+      "rgba(4, 94, 34, 0.568)",
+      "rgba(1, 48, 17, 0.568)"
+    );
+  }
 });
 
 longBreakBtn.addEventListener("click", () => {
-  animationColor(
-    "rgba(0, 150, 50, 0.568)",
-    "rgba(7, 207, 74, 0.568)",
-    "rgba(4, 94, 34, 0.568)",
-    "rgba(1, 48, 17, 0.568)"
-  );
+  if (rejectedTimer === false) {
+    animationColor(
+      "rgba(0, 150, 50, 0.568)",
+      "rgba(7, 207, 74, 0.568)",
+      "rgba(4, 94, 34, 0.568)",
+      "rgba(1, 48, 17, 0.568)"
+    );
+  }
 });
 
 // sounds
