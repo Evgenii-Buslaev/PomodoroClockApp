@@ -1,3 +1,5 @@
+// getting needed nodes
+
 const chooseBtns = document.querySelector(".choose-buttons");
 const chooseShortBtn = document.querySelector(".short-choose");
 const chooseLongBtn = document.querySelector(".long-choose");
@@ -24,9 +26,33 @@ let obj = {
 let sessionDuration = 25;
 let breakDuration = 5;
 
-// getting running interval function
+// catching running interval function
 let runningInterval;
 let soundTimeOut;
+
+// catching colors
+let colors;
+
+// adding state of counting to local storage
+if (localStorage.getItem("time")) {
+  setTimeout(() => {
+    timer.style.opacity = "1";
+  }, 1300);
+  if (timer.innerText !== "00:00") {
+    window.addEventListener("load", () => {
+      checkTimer(
+        JSON.parse(+localStorage.getItem("time").split(":")[0]),
+        JSON.parse(+localStorage.getItem("time").split(":")[1])
+      );
+    });
+  } else {
+    localStorage.clear();
+  }
+} else {
+  setTimeout(() => {
+    timer.style.opacity = "1";
+  }, 0);
+}
 
 //function for timers
 function timerClock(minutes, seconds = 1) {
@@ -74,27 +100,6 @@ function timerClock(minutes, seconds = 1) {
   }, 1000);
 
   runningInterval = clock;
-}
-
-// adding state of counting to local storage
-if (localStorage.getItem("time")) {
-  setTimeout(() => {
-    timer.style.opacity = "1";
-  }, 1300);
-  if (timer.innerText !== "00:00") {
-    window.addEventListener("load", () => {
-      checkTimer(
-        JSON.parse(+localStorage.getItem("time").split(":")[0]),
-        JSON.parse(+localStorage.getItem("time").split(":")[1])
-      );
-    });
-  } else {
-    localStorage.clear();
-  }
-} else {
-  setTimeout(() => {
-    timer.style.opacity = "1";
-  }, 0);
 }
 
 // checking whether any timer is running already
@@ -153,6 +158,7 @@ function defaultCycle() {
   });
 }
 
+// events for settings buttons
 chooseBreakShortBtn.addEventListener("click", () => {
   breakDuration = 5;
 });
@@ -171,6 +177,7 @@ chooseShortBtn.addEventListener("click", () => {
     }, 500);
   }
 });
+
 chooseLongBtn.addEventListener("click", () => {
   sessionDuration = 50;
   if (!runningInterval) {
@@ -182,7 +189,7 @@ chooseLongBtn.addEventListener("click", () => {
   }
 });
 
-// events for buttons
+// events for clock buttons
 startBtn.addEventListener("click", () => checkTimer(sessionDuration));
 shortBreakBtn.addEventListener("click", () => checkTimer(breakDuration));
 longBreakBtn.addEventListener("click", () => checkTimer(breakDuration));
@@ -195,10 +202,10 @@ finishBtn.addEventListener("click", () => {
 
 defCycleBtn.addEventListener("click", defaultCycle);
 
-// animations
+// animated colors
 
-function animationColor(array, colorBg, colorBtns, colorClock, colorTimer) {
-  array.forEach((elem) => {
+function animationColor(colorBg, colorBtns, colorClock, colorTimer) {
+  animatedBtns.forEach((elem) => {
     elem.classList.add("animated");
     elem.style.backgroundColor = colorBtns;
     elem.style.color = "black";
@@ -219,6 +226,15 @@ function animationColor(array, colorBg, colorBtns, colorClock, colorTimer) {
 
   timer.classList.add("animated");
   timer.style.color = colorTimer;
+
+  colors = arguments;
+
+  if (!localStorage.getItem("colors")) {
+    localStorage.setItem("colors", JSON.stringify(colors));
+  } else {
+    localStorage.removeItem("colors");
+    localStorage.setItem("colors", JSON.stringify(colors));
+  }
 }
 
 const animatedBtns = [
@@ -233,9 +249,12 @@ const animatedBtns = [
   defCycleBtn,
 ];
 
+if (localStorage.getItem("colors")) {
+  animationColor(...Object.values(JSON.parse(localStorage.getItem("colors"))));
+}
+
 startBtn.addEventListener("click", () => {
   animationColor(
-    animatedBtns,
     "rgba(230, 45, 106, 0.692)",
     "rgba(173, 57, 96, 0.692)",
     "rgba(94, 4, 34, 0.692)",
@@ -245,7 +264,6 @@ startBtn.addEventListener("click", () => {
 
 finishBtn.addEventListener("click", () => {
   animationColor(
-    animatedBtns,
     "rgb(56, 88, 148)",
     "rgb(61, 106, 189)",
     "rgb(120, 159, 231)",
@@ -255,7 +273,6 @@ finishBtn.addEventListener("click", () => {
 
 shortBreakBtn.addEventListener("click", () => {
   animationColor(
-    animatedBtns,
     "rgba(0, 150, 50, 0.568)",
     "rgba(7, 207, 74, 0.568)",
     "rgba(4, 94, 34, 0.568)",
@@ -265,7 +282,6 @@ shortBreakBtn.addEventListener("click", () => {
 
 longBreakBtn.addEventListener("click", () => {
   animationColor(
-    animatedBtns,
     "rgba(0, 150, 50, 0.568)",
     "rgba(7, 207, 74, 0.568)",
     "rgba(4, 94, 34, 0.568)",
