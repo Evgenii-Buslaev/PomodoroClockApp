@@ -15,6 +15,7 @@ const body = document.querySelector("body");
 const clock = document.querySelector(".clock");
 const editBtns = document.querySelector(".edit-buttons");
 const breakBtns = document.querySelector(".buttons");
+const pomodoroCont = document.querySelector(".pomodoro-list");
 
 // variables for duration
 let sessionDuration = 25;
@@ -29,6 +30,7 @@ let change = {
   rejected_timer: false,
   running_cycle: sessionDuration,
   cycles_amount: 0,
+  cycle_number: 0,
 };
 
 // adding state of counting to local storage
@@ -109,7 +111,6 @@ function checkTimer(minutes, seconds = 1) {
         "Таймер все ещё запущен. Вы уверены, что хотите перейти к другому?"
       );
       if (question) {
-        /*     clearTimeout(soundTimeOut); */
         clearInterval(change.running_interval);
         change.rejected_timer = false;
         return timerClock(minutes, seconds);
@@ -127,12 +128,42 @@ function checkTimer(minutes, seconds = 1) {
 function defaultCycle() {
   checkTimer(change.running_cycle);
   if (change.running_cycle === sessionDuration) {
+    // setting 'done' status to previous pomodoro elem
+    let loop = document.querySelector("div[number]");
+    if (loop) {
+      let doneDate = new Date();
+      let h = doneDate.getHours();
+      let m = doneDate.getMinutes();
+      loop.innerHTML += `, завершен в ${h}:${m}.`;
+
+      document.querySelector(
+        ".cycle-amount"
+      ).innerText = `Общее количество циклов: ${change.cycles_amount}`;
+    }
+
     animationColor(
       "rgba(230, 45, 106, 0.692)",
       "rgba(173, 57, 96, 0.692)",
       "rgba(94, 4, 34, 0.692)",
       "rgba(70, 3, 25, 0.692)"
     );
+    // putting loop element
+    change.cycle_number++;
+    let n = change.cycle_number;
+    let pomodoroElem = document.createElement("div");
+    pomodoroElem.classList.add("pomodoro-element");
+    pomodoroElem.setAttribute("number", n);
+    let date = new Date();
+    let hours = date.getHours();
+    let mins = date.getMinutes();
+    if (hours.length < 2) {
+      hours = "0" + hours;
+    }
+    if (mins.length < 2) {
+      mins = "0" + mins;
+    }
+    pomodoroElem.innerText = `Цикл ${n}: запущен в ${hours}:${mins}`;
+    pomodoroCont.prepend(pomodoroElem);
   } else {
     animationColor(
       "rgba(0, 150, 50, 0.568)",
@@ -212,6 +243,12 @@ function animationColor(colorBg, colorBtns, colorClock, colorTimer) {
   for (let i = 0; i < headings.length; i++) {
     headings[i].classList.add = "animated";
     headings[i].style.color = colorClock;
+  }
+
+  let pomodoroElems = document.querySelectorAll(".pomodoro-element");
+  for (let i = 0; i < pomodoroElems.length; i++) {
+    pomodoroElems[i].classList.add = "animated";
+    pomodoroElems[i].style.color = colorClock;
   }
 
   clock.classList.add("animated");
