@@ -40,6 +40,9 @@ h3 {
 }
 
 .pomodoro-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 300px;
   height: auto;
   margin: auto 0 auto 2rem;
@@ -47,7 +50,8 @@ h3 {
 }
 
 .clear-button {
-  margin: auto;
+  position: relative;
+  right: 0.5rem;
 }
 
 .clock {
@@ -140,18 +144,6 @@ h3 {
   text-align: center;
 }
 
-/* @media (min-height: 730px) {
-  .settongs-container {
-    margin: 2rem 2rem 0 0;
-  }
-}
-
-@media (min-height: 1000px) {
-  .settongs-container {
-    margin: 2rem 2rem 0 0;
-  }
-} */
-
 @media (max-width: 1400px) {
   .short-break-choose,
   .long-break-choose,
@@ -196,7 +188,7 @@ h3 {
 
   .pomodoro-element {
     position: relative;
-    left: 1rem;
+    right: 0.5rem;
   }
 }
 

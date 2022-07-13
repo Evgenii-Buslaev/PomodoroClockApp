@@ -350,20 +350,23 @@ finishBtn.addEventListener("click", () => {
   // setting 'done' status to previous pomodoro elem
   let loop = document.querySelectorAll("div[number]");
   if (loop.length >= 1) {
-    let doneDate = new Date();
-    let h = doneDate.getHours();
-    let m = doneDate.getMinutes();
-    if (h.toString().length < 2) {
-      h = "0" + h;
+    let substr = loop[0].innerText.match(/завершен/gi);
+    if (!substr) {
+      let doneDate = new Date();
+      let h = doneDate.getHours();
+      let m = doneDate.getMinutes();
+      if (h.toString().length < 2) {
+        h = "0" + h;
+      }
+      if (m.toString().length < 2) {
+        m = "0" + m;
+      }
+      loop[0].innerHTML += `, завершен в ${h}:${m}.`;
+      change.cycles_amount++;
+      document.querySelector(
+        ".cycle-amount"
+      ).innerText = `Общее количество завершенных циклов: ${change.cycles_amount}`;
     }
-    if (m.toString().length < 2) {
-      m = "0" + m;
-    }
-    loop[0].innerHTML += `, завершен в ${h}:${m}.`;
-    change.cycles_amount++;
-    document.querySelector(
-      ".cycle-amount"
-    ).innerText = `Общее количество завершенных циклов: ${change.cycles_amount}`;
   }
 });
 
