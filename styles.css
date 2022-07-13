@@ -2,17 +2,22 @@
 
 * {
   box-sizing: border-box;
-  margin: 0;
   font-family: "Oswald", sans-serif;
 }
 
 body {
-  display: flex;
-  justify-content: space-evenly;
-  margin: 2rem auto 0;
+  margin: auto;
   min-height: 100vh;
   background: rgb(56, 88, 148);
   color: rgb(82, 132, 224);
+}
+
+.main-container {
+  margin: auto;
+  width: 90vw;
+  height: 80vh;
+  display: flex;
+  justify-content: center;
 }
 
 h3:first-child {
@@ -28,6 +33,19 @@ h3 {
   flex-direction: column;
 }
 
+.settings-container {
+  margin: auto 2rem auto 0;
+  width: 300px;
+  height: auto;
+}
+
+.pomodoro-list {
+  width: 300px;
+  height: auto;
+  margin: auto 0 auto 2rem;
+  padding: 1rem 0 0 1rem;
+}
+
 .clock {
   width: 450px;
   height: 450px;
@@ -39,13 +57,11 @@ h3 {
   margin: auto;
   background-color: rgb(120, 159, 231);
   border-radius: 2rem;
-  box-shadow: 0.5rem 0.5rem 0.5rem rgb(90, 127, 196);
 }
 
 .choose-buttons {
-  width: 350px;
+  width: 300px;
   height: auto;
-  border: solid black;
 }
 .choose-buttons,
 .buttons {
@@ -117,6 +133,18 @@ h3 {
   text-align: center;
 }
 
+/* @media (min-height: 730px) {
+  .settongs-container {
+    margin: 2rem 2rem 0 0;
+  }
+}
+
+@media (min-height: 1000px) {
+  .settongs-container {
+    margin: 2rem 2rem 0 0;
+  }
+} */
+
 @media (max-width: 1400px) {
   .short-break-choose,
   .long-break-choose,
@@ -135,6 +163,33 @@ h3 {
   }
   #footer {
     font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 1150px) {
+  .main-container {
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: auto;
+  }
+  .settings-container {
+    width: 500px;
+    height: auto;
+    margin: 1rem auto;
+  }
+  .choose-buttons {
+    width: 500px;
+    margin: 0 auto;
+  }
+  .pomodoro-list {
+    width: 300px;
+    height: auto;
+    margin: auto;
+  }
+
+  .pomodoro-element {
+    position: relative;
+    left: 1rem;
   }
 }
 
@@ -159,23 +214,79 @@ h3 {
   }
 }
 
-@media (max-width: 850px) {
-  h3 {
-    font-size: 1rem;
-    margin-bottom: 0;
+.default {
+  padding: 1rem;
+  margin: 1rem auto;
+  border-radius: 0.5rem;
+}
+
+@media (max-width: 550px) {
+  .settings-container {
+    width: 400px;
+  }
+  .choose-buttons {
+    width: 400px;
   }
   .short-break-choose,
   .long-break-choose,
   .short-choose,
   .long-choose {
-    width: 135px;
+    margin: 0.5rem;
+  }
+}
+
+@media (max-width: 550px) {
+  .settings-container {
+    width: 300px;
+  }
+  .choose-buttons {
+    width: 300px;
+  }
+}
+
+@media (max-width: 410px) {
+  h3 {
+    font-size: 1rem;
   }
   .clock {
-    width: 270px;
-    height: 270px;
+    width: 280px;
+    height: 280px;
+    padding: 1rem;
+  }
+  .settings-container {
+    width: 280px;
+  }
+  .choose-buttons {
+    width: 280px;
   }
   .timer {
     font-size: 5rem;
+  }
+  .pomodoro-list {
+    width: 280px;
+  }
+}
+
+@media (max-width: 280px) {
+  h3 {
+    font-size: 0.7rem;
+  }
+  .clock {
+    width: 250px;
+    height: 250px;
+    padding: 1rem;
+  }
+  .settings-container {
+    width: 250px;
+  }
+  .choose-buttons {
+    width: 250px;
+  }
+  .timer {
+    font-size: 5rem;
+  }
+  .pomodoro-list {
+    width: 250px;
   }
   .short-break-choose,
   .long-break-choose,
@@ -186,14 +297,11 @@ h3 {
   .start,
   .finish,
   .default {
-    font-size: 0.5rem;
+    font-size: 0.7rem;
   }
-}
-
-.default {
-  padding: 1rem;
-  margin: 1rem auto;
-  border-radius: 0.5rem;
+  .pomodoro-element {
+    font-size: 0.7rem;
+  }
 }
 
 /* Animations */
@@ -226,16 +334,4 @@ h3 {
 .contact-container img {
   width: 50px;
   height: 50px;
-}
-
-.pomodoro-list {
-  /* width: 30%; */
-  height: auto;
-  border: solid black;
-}
-
-.pomodoro-element {
-  margin: 1rem auto;
-  position: relative;
-  left: 1rem;
 }
