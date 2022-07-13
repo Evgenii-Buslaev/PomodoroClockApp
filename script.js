@@ -31,7 +31,7 @@ let change = {
   running_interval: null,
   colors: null,
   rejected_timer: false,
-  running_cycle: sessionDuration,
+  running_cycle: 25,
   cycles_amount: 0,
   cycle_number: 0,
 };
@@ -107,7 +107,7 @@ function timerClock(minutes, seconds = 1) {
     } else {
       localStorage.setItem("time", timer.innerText);
     }
-  }, 1);
+  }, 1000);
 
   change.running_interval = clock;
 }
@@ -136,6 +136,7 @@ function checkTimer(minutes, seconds = 1) {
 
 function defaultCycle() {
   checkTimer(change.running_cycle);
+  console.log(change.running_cycle === sessionDuration);
   if (change.running_cycle === sessionDuration) {
     // setting 'done' status to previous pomodoro elem
     let loop = document.querySelector("div[number]");
@@ -217,12 +218,13 @@ chooseBreakShortBtn.addEventListener("click", () => {
   breakDuration = 5;
 });
 
-chooseBreakShortBtn.addEventListener("click", () => {
+chooseBreakLongBtn.addEventListener("click", () => {
   breakDuration = 10;
 });
 
 chooseShortBtn.addEventListener("click", () => {
   sessionDuration = 25;
+  change.running_cycle = sessionDuration;
   if (!change.running_interval) {
     timer.style.opacity = "0";
     setTimeout(() => {
@@ -234,6 +236,7 @@ chooseShortBtn.addEventListener("click", () => {
 
 chooseLongBtn.addEventListener("click", () => {
   sessionDuration = 50;
+  change.running_cycle = sessionDuration;
   if (!change.running_interval) {
     timer.style.opacity = "0";
     setTimeout(() => {
@@ -346,7 +349,7 @@ finishBtn.addEventListener("click", () => {
   }
   // setting 'done' status to previous pomodoro elem
   let loop = document.querySelectorAll("div[number]");
-  if (loop) {
+  if (loop.length >= 1) {
     let doneDate = new Date();
     let h = doneDate.getHours();
     let m = doneDate.getMinutes();
