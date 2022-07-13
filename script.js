@@ -48,6 +48,11 @@ if (localStorage.getItem("time")) {
         JSON.parse(+localStorage.getItem("time").split(":")[0]),
         JSON.parse(+localStorage.getItem("time").split(":")[1])
       );
+      setInterval(() => {
+        if (clock.innerText == "00:00") {
+          finishBtn.trigger("click");
+        }
+      }, 100);
     });
   } else {
     localStorage.removeItem("time");
@@ -58,11 +63,11 @@ if (localStorage.getItem("time")) {
   }, 0);
 }
 
-/* if (localStorage.getItem("cycles")) {
+if (localStorage.getItem("cycles")) {
   let elements = localStorage.getItem("cycles");
   console.log(elements);
   pomodoroCont.innerHTML = JSON.parse(localStorage.getItem("cycles"));
-} */
+}
 
 //function for timers
 function timerClock(minutes, seconds = 1) {
@@ -107,7 +112,7 @@ function timerClock(minutes, seconds = 1) {
     } else {
       localStorage.setItem("time", timer.innerText);
     }
-  }, 1000);
+  }, 1);
 
   change.running_interval = clock;
 }
@@ -191,14 +196,14 @@ function defaultCycle() {
     );
   }
 
-  /*  // adding loops to localStorage
+  // adding loops to localStorage
   if (localStorage.getItem("cycles")) {
     localStorage.removeItem("cycles");
     localStorage.setItem("cycles", JSON.stringify(pomodoroCont.innerHTML));
   } else {
     localStorage.setItem("cycles", JSON.stringify(pomodoroCont.innerHTML));
   }
- */
+
   let checking = setInterval(() => {
     if (timer.innerText == "00:00") {
       if (change.running_cycle === sessionDuration) {
