@@ -98,7 +98,7 @@ function timerClock(minutes, seconds = 1) {
     } else {
       localStorage.setItem("time", timer.innerText);
     }
-  }, 1000);
+  }, 1);
 
   change.running_interval = clock;
 }
@@ -130,17 +130,20 @@ function defaultCycle() {
   if (change.running_cycle === sessionDuration) {
     // setting 'done' status to previous pomodoro elem
     let loop = document.querySelector("div[number]");
+    // check whether loop was ended earlier
     if (loop) {
-      let doneDate = new Date();
-      let h = doneDate.getHours();
-      let m = doneDate.getMinutes();
-      loop.innerHTML += `, завершен в ${h}:${m}.`;
+      let substr = loop.innerText.match(/завершен/gi);
+      if (!substr) {
+        let doneDate = new Date();
+        let h = doneDate.getHours();
+        let m = doneDate.getMinutes();
+        loop.innerHTML += `, завершен в ${h}:${m}.`;
 
-      document.querySelector(
-        ".cycle-amount"
-      ).innerText = `Общее количество циклов: ${change.cycles_amount}`;
+        document.querySelector(
+          ".cycle-amount"
+        ).innerText = `Общее количество завершенных циклов: ${change.cycles_amount}`;
+      }
     }
-
     animationColor(
       "rgba(230, 45, 106, 0.692)",
       "rgba(173, 57, 96, 0.692)",
@@ -305,6 +308,18 @@ finishBtn.addEventListener("click", () => {
       "rgb(120, 159, 231)",
       "rgb(82, 132, 224)"
     );
+  }
+  // setting 'done' status to previous pomodoro elem
+  let loop = document.querySelectorAll("div[number]");
+  if (loop) {
+    let doneDate = new Date();
+    let h = doneDate.getHours();
+    let m = doneDate.getMinutes();
+    loop[0].innerHTML += `, завершен в ${h}:${m}.`;
+    change.cycles_amount++;
+    document.querySelector(
+      ".cycle-amount"
+    ).innerText = `Общее количество завершенных циклов: ${change.cycles_amount}`;
   }
 });
 
