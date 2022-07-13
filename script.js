@@ -16,6 +16,7 @@ const clock = document.querySelector(".clock");
 const editBtns = document.querySelector(".edit-buttons");
 const breakBtns = document.querySelector(".buttons");
 const pomodoroCont = document.querySelector(".pomodoro-list");
+const clearPomodoroElemsBtn = document.querySelector(".clear-button");
 
 /* localStorage.clear(); */
 
@@ -49,7 +50,7 @@ if (localStorage.getItem("time")) {
       );
     });
   } else {
-    localStorage.clear();
+    localStorage.removeItem("time");
   }
 } else {
   setTimeout(() => {
@@ -58,9 +59,10 @@ if (localStorage.getItem("time")) {
 }
 
 /* if (localStorage.getItem("cycles")) {
-  pomodoroCont.appendChild(JSON.parse(localStorage.getItem("cycle")));
-}
- */
+  let elements = localStorage.getItem("cycles");
+  console.log(elements);
+  pomodoroCont.innerHTML = JSON.parse(localStorage.getItem("cycles"));
+} */
 
 //function for timers
 function timerClock(minutes, seconds = 1) {
@@ -105,7 +107,7 @@ function timerClock(minutes, seconds = 1) {
     } else {
       localStorage.setItem("time", timer.innerText);
     }
-  }, 1000);
+  }, 1);
 
   change.running_interval = clock;
 }
@@ -188,17 +190,14 @@ function defaultCycle() {
     );
   }
 
-  /* // adding loops to localStorage
+  /*  // adding loops to localStorage
   if (localStorage.getItem("cycles")) {
     localStorage.removeItem("cycles");
     localStorage.setItem("cycles", JSON.stringify(pomodoroCont.innerHTML));
   } else {
-    localStorage.setItem(
-      "cycles",
-      JSON.stringify(document.querySelectorAll(".pomodoro-element"))
-    );
-  } */
-
+    localStorage.setItem("cycles", JSON.stringify(pomodoroCont.innerHTML));
+  }
+ */
   let checking = setInterval(() => {
     if (timer.innerText == "00:00") {
       if (change.running_cycle === sessionDuration) {
@@ -252,7 +251,18 @@ longBreakBtn.addEventListener("click", () => checkTimer(10));
 finishBtn.addEventListener("click", () => {
   clearInterval(change.running_interval);
   change.running_interval = null;
-  localStorage.clear();
+  localStorage.removeItem("time");
+});
+
+clearPomodoroElemsBtn.addEventListener("click", () => {
+  if (localStorage.getItem("cycles")) {
+    localStorage.removeItem("cycles");
+  }
+  let elem = document.querySelectorAll(".pomodoro-element");
+  for (let i = 0; i < elem.length; i++) {
+    pomodoroCont.removeChild(elem[i]);
+  }
+  change.cycles_amount = 0;
 });
 
 defCycleBtn.addEventListener("click", defaultCycle);
@@ -308,6 +318,7 @@ const animatedBtns = [
   startBtn,
   finishBtn,
   defCycleBtn,
+  clearPomodoroElemsBtn,
 ];
 
 if (localStorage.getItem("colors")) {
@@ -398,3 +409,4 @@ chooseBtns.addEventListener("click", (event) => {
 editBtns.addEventListener("click", soundClick);
 breakBtns.addEventListener("click", soundClick);
 defCycleBtn.addEventListener("click", soundClick);
+clearPomodoroElemsBtn.addEventListener("click", soundClick);

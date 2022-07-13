@@ -46,6 +46,10 @@ h3 {
   padding: 1rem 0 0 1rem;
 }
 
+.clear-button {
+  margin: auto;
+}
+
 .clock {
   width: 450px;
   height: 450px;
@@ -84,7 +88,8 @@ h3 {
 .long,
 .start,
 .finish,
-.default {
+.default,
+.clear-button {
   appearance: none;
   border: none;
   outline: none;
@@ -103,7 +108,8 @@ h3 {
 .long:hover,
 .start:hover,
 .finish:hover,
-.default:hover {
+.default:hover,
+.clear-button:hover {
   cursor: pointer;
   opacity: 0.8;
 }
@@ -116,7 +122,8 @@ h3 {
 .long:active,
 .start:active,
 .finish:active,
-.default:active {
+.default:active,
+.clear-button:active {
   opacity: 0.6;
 }
 
@@ -206,7 +213,8 @@ h3 {
   .long,
   .start,
   .finish,
-  .default {
+  .default,
+  .clear-button {
     font-size: 1rem;
   }
   #footer {
@@ -296,7 +304,8 @@ h3 {
   .long,
   .start,
   .finish,
-  .default {
+  .default,
+  .clear-button {
     font-size: 0.7rem;
   }
   .pomodoro-element {
