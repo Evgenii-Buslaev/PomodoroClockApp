@@ -17,6 +17,8 @@ const editBtns = document.querySelector(".edit-buttons");
 const breakBtns = document.querySelector(".buttons");
 const pomodoroCont = document.querySelector(".pomodoro-list");
 
+/* localStorage.clear(); */
+
 // variables for duration
 let sessionDuration = 25;
 let breakDuration = 5;
@@ -54,6 +56,11 @@ if (localStorage.getItem("time")) {
     timer.style.opacity = "1";
   }, 0);
 }
+
+/* if (localStorage.getItem("cycles")) {
+  pomodoroCont.appendChild(JSON.parse(localStorage.getItem("cycle")));
+}
+ */
 
 //function for timers
 function timerClock(minutes, seconds = 1) {
@@ -98,7 +105,7 @@ function timerClock(minutes, seconds = 1) {
     } else {
       localStorage.setItem("time", timer.innerText);
     }
-  }, 1);
+  }, 1000);
 
   change.running_interval = clock;
 }
@@ -137,8 +144,13 @@ function defaultCycle() {
         let doneDate = new Date();
         let h = doneDate.getHours();
         let m = doneDate.getMinutes();
+        if (h.toString().length < 2) {
+          h = "0" + h;
+        }
+        if (m.toString().length < 2) {
+          m = "0" + m;
+        }
         loop.innerHTML += `, завершен в ${h}:${m}.`;
-
         document.querySelector(
           ".cycle-amount"
         ).innerText = `Общее количество завершенных циклов: ${change.cycles_amount}`;
@@ -159,10 +171,10 @@ function defaultCycle() {
     let date = new Date();
     let hours = date.getHours();
     let mins = date.getMinutes();
-    if (hours.length < 2) {
+    if (hours.toString().length < 2) {
       hours = "0" + hours;
     }
-    if (mins.length < 2) {
+    if (mins.toString().length < 2) {
       mins = "0" + mins;
     }
     pomodoroElem.innerText = `Цикл ${n}: запущен в ${hours}:${mins}`;
@@ -175,6 +187,18 @@ function defaultCycle() {
       "rgba(1, 48, 17, 0.568)"
     );
   }
+
+  /* // adding loops to localStorage
+  if (localStorage.getItem("cycles")) {
+    localStorage.removeItem("cycles");
+    localStorage.setItem("cycles", JSON.stringify(pomodoroCont.innerHTML));
+  } else {
+    localStorage.setItem(
+      "cycles",
+      JSON.stringify(document.querySelectorAll(".pomodoro-element"))
+    );
+  } */
+
   let checking = setInterval(() => {
     if (timer.innerText == "00:00") {
       if (change.running_cycle === sessionDuration) {
@@ -315,6 +339,12 @@ finishBtn.addEventListener("click", () => {
     let doneDate = new Date();
     let h = doneDate.getHours();
     let m = doneDate.getMinutes();
+    if (h.toString().length < 2) {
+      h = "0" + h;
+    }
+    if (m.toString().length < 2) {
+      m = "0" + m;
+    }
     loop[0].innerHTML += `, завершен в ${h}:${m}.`;
     change.cycles_amount++;
     document.querySelector(
