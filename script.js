@@ -35,46 +35,9 @@ let change = {
   cycle_number: 0,
 };
 
-// adding state of counting to local storage
-if (localStorage.getItem("time")) {
-  setTimeout(() => {
-    timer.style.opacity = "1";
-  }, 1300);
-  if (timer.innerText !== "00:00") {
-    console.log(1);
-    window.addEventListener("load", () => {
-      checkTimer(
-        JSON.parse(+localStorage.getItem("time").split(":")[0]),
-        JSON.parse(+localStorage.getItem("time").split(":")[1])
-      );
-      setInterval(() => {
-        if (clock.innerText == "00:00") {
-          finishBtn.trigger("click");
-        }
-      }, 100);
-    });
-  } else {
-    localStorage.removeItem("time");
-  }
-} else {
-  setTimeout(() => {
-    timer.style.opacity = "1";
-  }, 0);
-}
+// functions of timer block
+// function for timers
 
-if (localStorage.getItem("cycles")) {
-  pomodoroCont.innerHTML = JSON.parse(localStorage.getItem("cycles"));
-}
-
-if (localStorage.getItem("cycles_amount")) {
-  change.cycles_amount = JSON.parse(localStorage.getItem("cycles_amount"));
-}
-
-if (localStorage.getItem("cycle_number")) {
-  change.cycle_number = JSON.parse(localStorage.getItem("cycle_number"));
-}
-
-//function for timers
 function timerClock(minutes, seconds = 1) {
   if (!change.start_clicks) {
     change.start_clicks = 1;
@@ -87,6 +50,7 @@ function timerClock(minutes, seconds = 1) {
         seconds = 59;
       } else {
         timer.innerText = "00:00";
+        soundTimer();
         clearInterval(clock);
         change.start_clicks = 0;
         animationColor(
@@ -95,8 +59,7 @@ function timerClock(minutes, seconds = 1) {
           "rgb(120, 159, 231)",
           "rgb(82, 132, 224)"
         );
-        soundTimer();
-        localStorage.clear();
+        localStorage.removeItem("time");
         return;
       }
     }
@@ -201,6 +164,14 @@ function defaultCycle() {
     );
   }
 
+  // adding loops to localStorage
+  localStorage.removeItem("cycles");
+  localStorage.setItem("cycles", JSON.stringify(pomodoroCont.innerHTML));
+  localStorage.removeItem("cycles_amount");
+  localStorage.removeItem("cycle_number");
+  localStorage.setItem("cycles_amount", JSON.stringify(change.cycles_amount));
+  localStorage.setItem("cycle_number", JSON.stringify(change.cycle_number));
+
   let checking = setInterval(() => {
     if (timer.innerText == "00:00") {
       if (change.running_cycle === sessionDuration) {
@@ -209,7 +180,7 @@ function defaultCycle() {
         change.running_cycle = sessionDuration;
         change.cycles_amount++;
       }
-      // adding loops to localStorage
+      // adding ended loops to localStorage
       localStorage.removeItem("cycles");
       localStorage.setItem("cycles", JSON.stringify(pomodoroCont.innerHTML));
       localStorage.removeItem("cycles_amount");
@@ -225,7 +196,47 @@ function defaultCycle() {
   }, 100);
 }
 
+function stopTimer() {
+  if (change.rejected_timer === false) {
+    animationColor(
+      "rgb(56, 88, 148)",
+      "rgb(61, 106, 189)",
+      "rgb(120, 159, 231)",
+      "rgb(82, 132, 224)"
+    );
+  }
+  // setting 'done' status to previous pomodoro elem
+  let loop = document.querySelectorAll("div[number]");
+  if (loop.length >= 1) {
+    let substr = loop[0].innerText.match(/завершен/gi);
+    if (!substr) {
+      let doneDate = new Date();
+      let h = doneDate.getHours();
+      let m = doneDate.getMinutes();
+      if (h.toString().length < 2) {
+        h = "0" + h;
+      }
+      if (m.toString().length < 2) {
+        m = "0" + m;
+      }
+      loop[0].innerHTML += `, завершен в ${h}:${m}.`;
+      change.cycles_amount++;
+      document.querySelector(
+        ".cycle-amount"
+      ).innerText = `Общее количество завершенных циклов: ${change.cycles_amount}`;
+    }
+  }
+
+  localStorage.removeItem("cycles");
+  localStorage.setItem("cycles", JSON.stringify(pomodoroCont.innerHTML));
+  localStorage.removeItem("cycles_amount");
+  localStorage.removeItem("cycle_number");
+  localStorage.setItem("cycles_amount", JSON.stringify(change.cycles_amount));
+  localStorage.setItem("cycle_number", JSON.stringify(change.cycle_number));
+}
+
 // events for settings buttons
+
 chooseBreakShortBtn.addEventListener("click", () => {
   breakDuration = 5;
 });
@@ -356,44 +367,7 @@ startBtn.addEventListener("click", () => {
     );
 });
 
-finishBtn.addEventListener("click", () => {
-  if (change.rejected_timer === false) {
-    animationColor(
-      "rgb(56, 88, 148)",
-      "rgb(61, 106, 189)",
-      "rgb(120, 159, 231)",
-      "rgb(82, 132, 224)"
-    );
-  }
-  // setting 'done' status to previous pomodoro elem
-  let loop = document.querySelectorAll("div[number]");
-  if (loop.length >= 1) {
-    let substr = loop[0].innerText.match(/завершен/gi);
-    if (!substr) {
-      let doneDate = new Date();
-      let h = doneDate.getHours();
-      let m = doneDate.getMinutes();
-      if (h.toString().length < 2) {
-        h = "0" + h;
-      }
-      if (m.toString().length < 2) {
-        m = "0" + m;
-      }
-      loop[0].innerHTML += `, завершен в ${h}:${m}.`;
-      change.cycles_amount++;
-      document.querySelector(
-        ".cycle-amount"
-      ).innerText = `Общее количество завершенных циклов: ${change.cycles_amount}`;
-    }
-  }
-
-  localStorage.removeItem("cycles");
-  localStorage.setItem("cycles", JSON.stringify(pomodoroCont.innerHTML));
-  localStorage.removeItem("cycles_amount");
-  localStorage.removeItem("cycle_number");
-  localStorage.setItem("cycles_amount", JSON.stringify(change.cycles_amount));
-  localStorage.setItem("cycle_number", JSON.stringify(change.cycle_number));
-});
+finishBtn.addEventListener("click", stopTimer);
 
 shortBreakBtn.addEventListener("click", () => {
   if (change.rejected_timer === false) {
@@ -418,7 +392,6 @@ longBreakBtn.addEventListener("click", () => {
 });
 
 // sounds
-
 function soundClick() {
   let audio = new Audio();
   audio.src = "Sounds/btn.mp3";
@@ -441,3 +414,49 @@ editBtns.addEventListener("click", soundClick);
 breakBtns.addEventListener("click", soundClick);
 defCycleBtn.addEventListener("click", soundClick);
 clearPomodoroElemsBtn.addEventListener("click", soundClick);
+
+// adding state of clock and list from localStorage to the page
+if (localStorage.getItem("time")) {
+  setTimeout(() => {
+    timer.style.opacity = "1";
+  }, 1300);
+  if (timer.innerText !== "00:00") {
+    window.addEventListener("load", () => {
+      let continueTimer = document.createElement("button");
+      timer.innerText = `${localStorage.getItem("time").split(":")[0]}:${
+        localStorage.getItem("time").split(":")[1]
+      }`;
+      continueTimer.innerText = "Continue";
+      continueTimer.addEventListener("click", () => {
+        checkTimer(
+          JSON.parse(+localStorage.getItem("time").split(":")[0]),
+          JSON.parse(+localStorage.getItem("time").split(":")[1])
+        );
+        let check = setInterval(() => {
+          if (timer.innerText === "00:00") {
+            stopTimer();
+            clearInterval(check);
+          }
+          continueTimer.remove();
+        }, 100);
+      });
+      clock.append(continueTimer);
+    });
+  } else {
+    localStorage.removeItem("time");
+  }
+} else {
+  setTimeout(() => {
+    timer.style.opacity = "1";
+  }, 0);
+}
+
+if (localStorage.getItem("cycles")) {
+  pomodoroCont.innerHTML = JSON.parse(localStorage.getItem("cycles"));
+}
+if (localStorage.getItem("cycles_amount")) {
+  change.cycles_amount = JSON.parse(localStorage.getItem("cycles_amount"));
+}
+if (localStorage.getItem("cycle_number")) {
+  change.cycle_number = JSON.parse(localStorage.getItem("cycle_number"));
+}
