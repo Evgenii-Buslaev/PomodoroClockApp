@@ -19,8 +19,6 @@ const pomodoroCont = document.querySelector(".pomodoro-list");
 const clearPomodoroElemsBtn = document.querySelector(".clear-button");
 const cycleAmount = document.querySelector(".cycle-amount");
 
-localStorage.clear();
-
 // variables for duration
 let sessionDuration = 25;
 let breakDuration = 5;
@@ -65,9 +63,15 @@ if (localStorage.getItem("time")) {
 }
 
 if (localStorage.getItem("cycles")) {
-  let elements = localStorage.getItem("cycles");
-  console.log(elements);
   pomodoroCont.innerHTML = JSON.parse(localStorage.getItem("cycles"));
+}
+
+if (localStorage.getItem("cycles_amount")) {
+  change.cycles_amount = JSON.parse(localStorage.getItem("cycles_amount"));
+}
+
+if (localStorage.getItem("cycle_number")) {
+  change.cycle_number = JSON.parse(localStorage.getItem("cycle_number"));
 }
 
 //function for timers
@@ -142,7 +146,6 @@ function checkTimer(minutes, seconds = 1) {
 
 function defaultCycle() {
   checkTimer(change.running_cycle);
-  console.log(change.running_cycle === sessionDuration);
   if (change.running_cycle === sessionDuration) {
     // setting 'done' status to previous pomodoro elem
     let loop = document.querySelector("div[number]");
@@ -171,6 +174,7 @@ function defaultCycle() {
       "rgba(94, 4, 34, 0.692)",
       "rgba(70, 3, 25, 0.692)"
     );
+
     // putting loop element
     change.cycle_number++;
     let n = change.cycle_number;
@@ -197,14 +201,6 @@ function defaultCycle() {
     );
   }
 
-  // adding loops to localStorage
-  if (localStorage.getItem("cycles")) {
-    localStorage.removeItem("cycles");
-    localStorage.setItem("cycles", JSON.stringify(pomodoroCont.innerHTML));
-  } else {
-    localStorage.setItem("cycles", JSON.stringify(pomodoroCont.innerHTML));
-  }
-
   let checking = setInterval(() => {
     if (timer.innerText == "00:00") {
       if (change.running_cycle === sessionDuration) {
@@ -213,6 +209,16 @@ function defaultCycle() {
         change.running_cycle = sessionDuration;
         change.cycles_amount++;
       }
+      // adding loops to localStorage
+      localStorage.removeItem("cycles");
+      localStorage.setItem("cycles", JSON.stringify(pomodoroCont.innerHTML));
+      localStorage.removeItem("cycles_amount");
+      localStorage.removeItem("cycle_number");
+      localStorage.setItem(
+        "cycles_amount",
+        JSON.stringify(change.cycles_amount)
+      );
+      localStorage.setItem("cycle_number", JSON.stringify(change.cycle_number));
       clearInterval(checking);
       return defaultCycle();
     }
@@ -274,6 +280,10 @@ clearPomodoroElemsBtn.addEventListener("click", () => {
   cycleAmount.innerText = "Общее количество завершенных циклов:0";
   change.cycles_amount = 0;
   change.cycle_number = 0;
+
+  localStorage.removeItem("cycles");
+  localStorage.removeItem("cycles_amount");
+  localStorage.removeItem("cycle_number");
 });
 
 defCycleBtn.addEventListener("click", defaultCycle);
@@ -376,6 +386,13 @@ finishBtn.addEventListener("click", () => {
       ).innerText = `Общее количество завершенных циклов: ${change.cycles_amount}`;
     }
   }
+
+  localStorage.removeItem("cycles");
+  localStorage.setItem("cycles", JSON.stringify(pomodoroCont.innerHTML));
+  localStorage.removeItem("cycles_amount");
+  localStorage.removeItem("cycle_number");
+  localStorage.setItem("cycles_amount", JSON.stringify(change.cycles_amount));
+  localStorage.setItem("cycle_number", JSON.stringify(change.cycle_number));
 });
 
 shortBreakBtn.addEventListener("click", () => {
