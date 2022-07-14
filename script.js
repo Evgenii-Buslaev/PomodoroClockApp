@@ -17,8 +17,9 @@ const editBtns = document.querySelector(".edit-buttons");
 const breakBtns = document.querySelector(".buttons");
 const pomodoroCont = document.querySelector(".pomodoro-list");
 const clearPomodoroElemsBtn = document.querySelector(".clear-button");
+const cycleAmount = document.querySelector(".cycle-amount");
 
-/* localStorage.clear(); */
+localStorage.clear();
 
 // variables for duration
 let sessionDuration = 25;
@@ -270,7 +271,9 @@ clearPomodoroElemsBtn.addEventListener("click", () => {
   for (let i = 0; i < elem.length; i++) {
     pomodoroCont.removeChild(elem[i]);
   }
+  cycleAmount.innerText = "Общее количество завершенных циклов:0";
   change.cycles_amount = 0;
+  change.cycle_number = 0;
 });
 
 defCycleBtn.addEventListener("click", defaultCycle);

@@ -50,9 +50,13 @@ h3 {
   overflow-y: scroll;
 }
 
+.cycle-bar {
+  display: flex;
+  flex-direction: column;
+}
 .clear-button {
   position: relative;
-  right: 0.5rem;
+  margin: 1rem auto;
 }
 
 .clock {
