@@ -448,7 +448,7 @@ if (localStorage.getItem("time")) {
   }, 1300);
   if (timer.innerText !== "00:00") {
     window.addEventListener("load", () => {
-      defCycleBtn.innerText = "Continue";
+      defCycleBtn.innerText = "Продолжить";
       timer.innerText = `${localStorage.getItem("time").split(":")[0]}:${
         localStorage.getItem("time").split(":")[1]
       }`;
