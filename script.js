@@ -81,7 +81,7 @@ function timerClock(minutes, seconds = 1) {
     } else {
       localStorage.setItem("time", timer.innerText);
     }
-  }, 1);
+  }, 1000);
 
   change.running_interval = clock;
 }

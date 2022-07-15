@@ -31,12 +31,20 @@ h3 {
 .center-panel {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 }
 
 .settings-container {
-  margin: auto 2rem auto 0;
+  margin: 2rem 2rem auto 0;
   width: 300px;
   height: auto;
+  border-radius: 2rem;
+  transition-property: all;
+  transition-duration: 1s;
+}
+
+.settings-container:hover {
+  box-shadow: 0.5rem 0.5rem 3rem rgb(168, 181, 182);
 }
 
 .pomodoro-list {
@@ -45,9 +53,16 @@ h3 {
   align-items: start;
   width: 300px;
   height: 50vh;
-  margin: auto 0 auto 2rem;
+  margin: 2rem 0 auto 2rem;
   padding: 1rem 0 0 1rem;
-  overflow-y: scroll;
+  overflow-y: auto;
+  border-radius: 2rem;
+  transition-property: all;
+  transition-duration: 1s;
+}
+
+.pomodoro-list:hover {
+  box-shadow: 0.5rem 0.5rem 3rem rgb(168, 181, 182);
 }
 
 .cycle-bar {
@@ -55,8 +70,9 @@ h3 {
   flex-direction: column;
 }
 .clear-button {
-  position: relative;
   margin: 1rem auto;
+  padding: 2rem;
+  text-align: center;
 }
 
 .clock {
@@ -67,7 +83,7 @@ h3 {
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  margin: auto;
+  margin: min(2rem) auto;
   background-color: rgb(120, 159, 231);
   border-radius: 2rem;
 }
@@ -209,7 +225,6 @@ h3 {
   .timer {
     font-size: 7rem;
   }
-
   .short-break-choose,
   .long-break-choose,
   .short-choose,
@@ -277,6 +292,18 @@ h3 {
   }
   .pomodoro-list {
     width: 280px;
+  }
+  .short-break-choose,
+  .long-break-choose,
+  .short-choose,
+  .long-choose,
+  .short,
+  .long,
+  .start,
+  .finish,
+  .default,
+  .clear-button {
+    font-size: 0.9rem;
   }
 }
 
