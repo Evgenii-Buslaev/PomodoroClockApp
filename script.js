@@ -6,6 +6,7 @@ const chooseLongBtn = document.querySelector(".long-choose");
 const chooseBreakShortBtn = document.querySelector(".short-break-choose");
 const chooseBreakLongBtn = document.querySelector(".long-break-choose");
 const timer = document.querySelector(".timer");
+const breakTimer = document.querySelector(".break");
 const shortBreakBtn = document.querySelector(".short");
 const longBreakBtn = document.querySelector(".long");
 const startBtn = document.querySelector(".start");
@@ -110,6 +111,7 @@ function checkTimer(minutes, seconds = 1) {
 function defaultCycle() {
   checkTimer(change.running_cycle);
   if (change.running_cycle === sessionDuration) {
+    breakTimer.innerText = `${breakDuration}:00`;
     // setting 'done' status to previous pomodoro elem
     let loop = document.querySelector("div[number]");
     // check whether loop was ended earlier
@@ -156,6 +158,7 @@ function defaultCycle() {
     pomodoroElem.innerText = `Цикл ${n}: запущен в ${hours}:${mins}`;
     pomodoroCont.prepend(pomodoroElem);
   } else {
+    breakTimer.innerText = `${sessionDuration}:00`;
     animationColor(
       "rgba(0, 150, 50, 0.568)",
       "rgba(7, 207, 74, 0.568)",
@@ -239,10 +242,24 @@ function stopTimer() {
 
 chooseBreakShortBtn.addEventListener("click", () => {
   breakDuration = 5;
+  if (!change.running_interval) {
+    breakTimer.style.opacity = "0";
+    setTimeout(() => {
+      breakTimer.style.opacity = "1";
+      breakTimer.innerText = "5:00";
+    }, 500);
+  }
 });
 
 chooseBreakLongBtn.addEventListener("click", () => {
   breakDuration = 10;
+  if (!change.running_interval) {
+    breakTimer.style.opacity = "0";
+    setTimeout(() => {
+      breakTimer.style.opacity = "1";
+      breakTimer.innerText = "10:00";
+    }, 500);
+  }
 });
 
 chooseShortBtn.addEventListener("click", () => {
@@ -308,6 +325,12 @@ function animationColor(colorBg, colorBtns, colorClock, colorTimer) {
     elem.style.color = "black";
   });
 
+  if (document.querySelectorAll(".default")[1]) {
+    document.querySelectorAll(".default")[1].classList.add("animated");
+    document.querySelectorAll(".default")[1].style.backgroundColor = colorBtns;
+    document.querySelectorAll(".default")[1].style.color = "black";
+  }
+
   let headings = document.querySelectorAll("h3");
   for (let i = 0; i < headings.length; i++) {
     headings[i].classList.add = "animated";
@@ -329,6 +352,9 @@ function animationColor(colorBg, colorBtns, colorClock, colorTimer) {
 
   timer.classList.add("animated");
   timer.style.color = colorTimer;
+
+  breakTimer.classList.add("animated");
+  breakTimer.style.color = colorTimer;
 
   colors = arguments;
 
@@ -422,25 +448,28 @@ if (localStorage.getItem("time")) {
   }, 1300);
   if (timer.innerText !== "00:00") {
     window.addEventListener("load", () => {
-      let continueTimer = document.createElement("button");
+      defCycleBtn.innerText = "Continue";
       timer.innerText = `${localStorage.getItem("time").split(":")[0]}:${
         localStorage.getItem("time").split(":")[1]
       }`;
-      continueTimer.innerText = "Continue";
-      continueTimer.addEventListener("click", () => {
+      defCycleBtn.removeEventListener("click", defaultCycle);
+
+      defCycleBtn.addEventListener("click", () => {
+        defCycleBtn.innerText = "Запустить цикл";
         checkTimer(
           JSON.parse(+localStorage.getItem("time").split(":")[0]),
           JSON.parse(+localStorage.getItem("time").split(":")[1])
         );
         let check = setInterval(() => {
           if (timer.innerText === "00:00") {
+            defCycleBtn.addEventListener("click", defaultCycle);
             stopTimer();
             clearInterval(check);
           }
           continueTimer.remove();
         }, 100);
       });
-      clock.append(continueTimer);
+      defCycleBtn.before(continueTimer);
     });
   } else {
     localStorage.removeItem("time");

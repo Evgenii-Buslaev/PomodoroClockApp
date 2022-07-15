@@ -145,6 +145,14 @@ h3 {
   transition-duration: 0.5s;
 }
 
+.break {
+  text-align: center;
+  margin-top: -2rem;
+  font-size: 2rem;
+  transition-property: all;
+  transition-duration: 0.5s;
+}
+
 .edit-buttons {
   text-align: center;
 }
