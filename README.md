@@ -1,6 +1,8 @@
-#Pomodoro Clock Application
+Pomodoro Clock Application
+=
 
-###Desctiption
+Desctiption
+-
 
 This is a simple application i wrote to consolidate skills of working with DOM elements.
 
